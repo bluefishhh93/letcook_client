@@ -36,7 +36,10 @@ const initialProductState: ProductType = {
   is_activated: true,
   amountToSell: 0,
   averageWeight: 0,
-  measurement: { id: 0, unit: '' },
+  measurement: {
+    id: 0, name: '',
+    isActive: false
+  },
   nutrition: {
     calories: 0,
     sugar: 0,
