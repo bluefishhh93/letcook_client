@@ -1,14 +1,14 @@
-// components/NavigationEvents.tsx
 "use client";
 
 import { useState, useEffect } from 'react';
 import { Spinner } from './ui/spinner';
 
 export default function NavigationEvents() {
-
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     const handleStart = () => setLoading(true);
     const handleComplete = () => setLoading(false);
 

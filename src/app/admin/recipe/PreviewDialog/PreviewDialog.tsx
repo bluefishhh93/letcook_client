@@ -26,10 +26,6 @@ const PreviewDialog: FC<PreviewDialogProps> = ({ recipe, onAction }) => {
         onAction(recipe._id, 'reject', feedback);
     };
 
-    const handlePrint = () => {
-        window.print();
-    };
-
     return (
         <>
         <Dialog open={isOpen} onOpenChange={setIsOpen}>

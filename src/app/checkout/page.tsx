@@ -69,7 +69,6 @@ export default function Component() {
       console.error("Cannot submit order: No items in cart.");
       return;
     }
-    
 
     const payload: CheckoutPayload = {
       userId: user?.id,
@@ -92,7 +91,7 @@ export default function Component() {
         }
       } else if (formData.paymentMethod === "vnpay") {
         const vnpayUrl = await CheckoutService.createVNPayUrl(totalPrice);
-        if (vnpayUrl) {
+        if (vnpayUrl && typeof window !== 'undefined') {
           window.location.href = vnpayUrl;
         }
       } else {
