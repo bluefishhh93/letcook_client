@@ -8,7 +8,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import NextTopLoader from "nextjs-toploader";
 
-import { Toaster } from "@/components/ui/toaster";
+// import { Toaster } from "@/components/ui/toaster";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const inter = Inter({ subsets: ["latin"] });
@@ -55,7 +55,7 @@ export default function RootLayout({
             {/* <Navbar /> */}
             <div className="pt-14">{children}</div>
             <ToastContainer {...toastConfig} />
-            <Toaster />
+            {/* <Toaster /> */}
           </ThemeProvider>
           {/* </StoreProvider> */}
         </SessionWrapper>
