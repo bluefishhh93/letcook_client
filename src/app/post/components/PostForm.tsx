@@ -1,5 +1,8 @@
-"use client";
-import { Button } from "@/components/ui/button";
+'use client';
+
+import { useState } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -8,47 +11,54 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
-import axios from "@/lib/axios";
-import { ReactNode } from "react";
-import { useForm } from "react-hook-form";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
+import dynamic from 'next/dynamic';
+import useUploadFile from '@/hooks/useUploadFile';
+import { toast } from 'react-toastify';
+import axios from '@/lib/axios';
+import { User, UserInfo } from 'CustomTypes';
 
-// export function AddPost() {
-//   return (
-//     <Dialog>
-//       <DialogTrigger asChild>
-//         <Button>Add Post</Button>
-//       </DialogTrigger>
-//       <DialogContent className="sm:max-w-6xl w-2/3 h-4/5">
-//         <FormPost />
-//       </DialogContent>
-//     </Dialog>
-//   );
-// }
-import Editor from "@/components/Editor";
-import useUploadFile from "@/hooks/useUploadFile";
-import { toast } from "react-toastify";
+const Editor = dynamic(() => import('@/components/Editor'), { ssr: false });
 
-export default function FormPost({ user }: any): ReactNode {
-  const { InputFile, filePath } = useUploadFile("post");
-  const form = useForm({
+interface FormValues {
+  title: string;
+  content: string;
+  userId: string;
+  image: string;
+}
+
+interface FormPostProps {
+  user: User & UserInfo;
+}
+
+export default function FormPost({ user }: FormPostProps) {
+  const { InputFile, filePath } = useUploadFile('post');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const form = useForm<FormValues>({
     defaultValues: {
-      title: "",
-      content: "",
-      userId: "",
+      title: '',
+      content: '',
+      userId: '',
       image: filePath,
     },
   });
-  const onsubmit = async (data: any) => {
-    data.userId = user.id;
-    console.log(data);
-    const res = await axios.post("/api/post", data);
-    // console.log(res.data);
-    if (res.status === 201) {
-      toast.success("Post successfully added");
-      // form.reset();
+
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    setIsSubmitting(true);
+    try {
+      data.userId = user.id;
+      const res = await axios.post('/api/post', data);
+      if (res.status === 201) {
+        toast.success('Post successfully added');
+        form.reset();
+      }
+    } catch (error) {
+      toast.error('Error adding post');
+    } finally {
+      setIsSubmitting(false);
     }
   };
   // const Editor = dynamic(() => import('@/components/Editor'), { ssr: false });
@@ -56,7 +66,7 @@ export default function FormPost({ user }: any): ReactNode {
     <Form {...form}>
       <form
         className="flex flex-col space-y-5 overflow-y-auto"
-        onSubmit={form.handleSubmit(onsubmit)}
+        onSubmit={form.handleSubmit(onSubmit)}
         encType="multipart/form-data"
       >
         <FormField
