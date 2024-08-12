@@ -14,7 +14,7 @@ const CategorySelect: React.FC<CategorySelectProps> = ({ value, onChange }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/categoryProduct");
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/categoryProduct`);
         const data = await response.json();
         setCategories(data);
       } catch (error) {

@@ -14,7 +14,7 @@ const MeasurementSelect: React.FC<MeasurementSelectProps> = ({ value, onChange }
   useEffect(() => {
     const fetchMeasurements = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/measurements");
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/measurements`);
         const data = await response.json();
         // console.log(data);
         setMeasurements(data);

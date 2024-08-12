@@ -97,7 +97,7 @@ const UpdateImage = forwardRef<
     onUploadProgress: (progressEvent: AxiosProgressEvent) => void,
     cancelSource: CancelTokenSource
   ) => {
-    return axios.post(`http://localhost:3000/api/uploadImg`, formData, {
+    return axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/uploadImg`, formData, {
       onUploadProgress,
       cancelToken: cancelSource.token,
     });
@@ -151,7 +151,7 @@ const UpdateImage = forwardRef<
         await Promise.all(
           filesToDeletes.map((file) => {
             return axios.delete(
-              `http://localhost:3000/api/uploadImg/${file.id}`
+              `${process.env.NEXT_PUBLIC_API_URL}/api/uploadImg/${file.id}`
             );
           })
         );

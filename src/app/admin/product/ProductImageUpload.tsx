@@ -140,7 +140,7 @@ const ProductImageUpload = forwardRef<ProductImageUploadHandle, ImageUploadProps
       cancelSource: CancelTokenSource
     ) => {
 
-      return axios.post(`http://localhost:3000/api/uploadImg`, formData, {
+      return axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/uploadImg`, formData, {
         onUploadProgress,
         cancelToken: cancelSource.token,
       });
