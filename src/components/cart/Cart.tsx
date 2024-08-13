@@ -78,7 +78,7 @@ export default function Cart() {
             <InsufficientStockWarning insufficientList={insufficientList} />
             <CheckoutButton 
               insufficientList={insufficientList} 
-              onCheckout={() => router.push('http://localhost:4000/checkout')}
+              onCheckout={() => router.push('/checkout')}
             />
           </DrawerFooter>
         )}
